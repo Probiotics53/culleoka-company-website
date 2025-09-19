@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - Culleoka Company</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2e7d32;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #2e7d32;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+        }
+        
+        .hero {
+            padding: 120px 6% 80px;
+            background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(46, 125, 50, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2e7d32;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 24px;
+            border: 1px solid rgba(46, 125, 50, 0.2);
+        }
+        
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: #1b5e20;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        
+        .hero-subtitle {
+            font-size: 22px;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+        
+        .filter-section {
+            padding: 40px 6%;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .filter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: white;
+            color: #666;
+            border: 2px solid #e0e0e0;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: #2e7d32;
+            color: white;
+            border-color: #2e7d32;
+        }
+        
+        .products-section {
+            padding: 80px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-color: rgba(46, 125, 50, 0.2);
+        }
+        
+        .product-image {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image.cleaning {
+            background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
+        }
+        
+        .product-image.drain {
+            background: linear-gradient(135deg, #f0f4f9 0%, #e1e8f0 100%);
+        }
+        
+        .product-image.scale {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+        }
+        
+        .product-image.soap {
+            background: linear-gradient(135deg, #f8f4ff 0%, #ede7f6 100%);
+        }
+        
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        
+        .product-image.cleaning::before {
+            background: radial-gradient(circle, rgba(46, 125, 50, 0.1) 0%, transparent 70%);
+        }
+        
+        .product-image.drain::before {
+            background: radial-gradient(circle, rgba(30, 81, 123, 0.1) 0%, transparent 70%);
+        }
+        
+        .product-image.scale::before {
+            background: radial-gradient(circle, rgba(255, 152, 0, 0.1) 0%, transparent 70%);
+        }
+        
+        .product-image.soap::before {
+            background: radial-gradient(circle, rgba(156, 39, 176, 0.1) 0%, transparent 70%);
+        }
+        
+        .product-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .product-placeholder.cleaning {
+            color: #2e7d32;
+        }
+        
+        .product-placeholder.drain {
+            color: #1e517b;
+        }
+        
+        .product-placeholder.scale {
+            color: #e65100;
+        }
+        
+        .product-placeholder.soap {
+            color: #7b1fa2;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 3;
+        }
+        
+        .product-badge.cleaning {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+        }
+        
+        .product-badge.drain {
+            background: linear-gradient(135deg, #1e517b 0%, #2196f3 100%);
+        }
+        
+        .product-badge.scale {
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+        }
+        
+        .product-badge.soap {
+            background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
+        }
+        
+        .product-content {
+            padding: 32px 24px 24px;
+        }
+        
+        .product-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        
+        .product-title.cleaning {
+            color: #1b5e20;
+        }
+        
+        .product-title.drain {
+            color: #1e517b;
+        }
+        
+        .product-title.scale {
+            color: #e65100;
+        }
+        
+        .product-title.soap {
+            color: #7b1fa2;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .product-features {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .feature-tag {
+            background: #f0f0f0;
+            color: #666;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .product-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .product-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .product-price.cleaning {
+            color: #2e7d32;
+        }
+        
+        .product-price.drain {
+            color: #1e517b;
+        }
+        
+        .product-price.scale {
+            color: #e65100;
+        }
+        
+        .product-price.soap {
+            color: #7b1fa2;
+        }
+        
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+        
+        .stars {
+            color: #ffd700;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn-view {
+            flex: 1;
+            background: transparent;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-view.cleaning {
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+        }
+        
+        .btn-view.cleaning:hover {
+            background: #2e7d32;
+            color: white;
+        }
+        
+        .btn-view.drain {
+            color: #1e517b;
+            border: 2px solid #1e517b;
+        }
+        
+        .btn-view.drain:hover {
+            background: #1e517b;
+            color: white;
+        }
+        
+        .btn-view.scale {
+            color: #e65100;
+            border: 2px solid #e65100;
+        }
+        
+        .btn-view.scale:hover {
+            background: #e65100;
+            color: white;
+        }
+        
+        .btn-view.soap {
+            color: #7b1fa2;
+            border: 2px solid #7b1fa2;
+        }
+        
+        .btn-view.soap:hover {
+            background: #7b1fa2;
+            color: white;
+        }
+        
+        .btn-add {
+            flex: 1;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-add.cleaning {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+        }
+        
+        .btn-add.drain {
+            background: linear-gradient(135deg, #1e517b 0%, #2196f3 100%);
+        }
+        
+        .btn-add.scale {
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+        }
+        
+        .btn-add.soap {
+            background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
+        }
+        
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .info-section {
+            padding: 80px 6%;
+            background: #f8fdf8;
+            text-align: center;
+        }
+        
+        .info-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .info-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 24px;
+        }
+        
+        .info-description {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .info-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #2e7d32;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 20px 60px;
+            }
+            
+            .hero-title {
+                font-size: 42px;
+            }
+            
+            .filter-section {
+                padding: 20px;
+            }
+            
+            .products-section {
+                padding: 60px 20px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .info-section {
+                padding: 60px 20px;
+            }
+            
+            .info-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">Cully's</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="#cart" class="cta-button">View Cart</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🧪 Probiotic Technology</div>
+            <h1 class="hero-title">All Products</h1>
+            <p class="hero-subtitle">
+                Discover our complete line of probiotic-powered, non-toxic cleaning solutions. 
+                Each product harnesses beneficial bacteria for superior cleaning performance.
+            </p>
+        </div>
+    </section>
+
+    <section class="filter-section">
+        <div class="filter-container">
+            <button class="filter-btn active">All Products</button>
+            <button class="filter-btn">All-Purpose</button>
+            <button class="filter-btn">Drain & Septic</button>
+            <button class="filter-btn">Scale & Scum</button>
+            <button class="filter-btn">Hand Soap</button>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image cleaning">
+                    <div class="product-badge cleaning">🦠 Probiotic</div>
+                    <div class="product-placeholder cleaning">
+                        Natural Based<br>
+                        Cleaner
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title cleaning">Natural Based Cleaner</h3>
+                    <p class="product-description">
+                        All-purpose cleaning spray with probiotic power. Works on multiple surfaces and continues cleaning for up to 96 hours.
+                    </p>
+                    <div class="product-features">
+                        <span class="feature-tag">3 Scents</span>
+                        <span class="feature-tag">96-Hour Protection</span>
+                        <span class="feature-tag">Multi-Surface</span>
+                    </div>
+                    <div class="product-pricing">
+                        <div class="product-price cleaning">From $13.95</div>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>4.91 (33)</span>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <a href="product-natural-cleaner.html" class="btn-view cleaning">View Details</a>
+                        <button class="btn-add cleaning">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image drain">
+                    <div class="product-badge drain">🔧 Preventative</div>
+                    <div class="product-placeholder drain">
+                        Drain, Septic<br>
+                        & Sewer Cleaner
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title drain">Drain, Septic & Sewer Cleaner</h3>
+                    <p class="product-description">
+                        Natural preventative maintenance for your entire drainage system. Keeps drains flowing and septic tanks healthy.
+                    </p>
+                    <div class="product-features">
+                        <span class="feature-tag">Septic Safe</span>
+                        <span class="feature-tag">Preventative</span>
+                        <span class="feature-tag">Bulk Options</span>
+                    </div>
+                    <div class="product-pricing">
+                        <div class="product-price drain">From $29.99</div>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>4.59 (27)</span>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <a href="product-drain-septic.html" class="btn-view drain">View Details</a>
+                        <button class="btn-add drain">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image scale">
+                    <div class="product-badge scale">🍋 Citrus</div>
+                    <div class="product-placeholder scale">
+                        Scale and Scum<br>
+                        Remover
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title scale">Natural Based Scale and Scum</h3>
+                    <p class="product-description">
+                        Lemongrass citrus formula cuts through mineral deposits, soap scum, and hard water stains without harsh chemicals.
+                    </p>
+                    <div class="product-features">
+                        <span class="feature-tag">Lemongrass Citrus</span>
+                        <span class="feature-tag">No Toxic Fumes</span>
+                        <span class="feature-tag">Streak-Free</span>
+                    </div>
+                    <div class="product-pricing">
+                        <div class="product-price scale">$14.20</div>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>4.68 (31)</span>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <a href="product-scale-scum.html" class="btn-view scale">View Details</a>
+                        <button class="btn-add scale">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image soap">
+                    <div class="product-badge soap">🧴 Foaming</div>
+                    <div class="product-placeholder soap">
+                        Natural Foaming<br>
+                        Hand Soap
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title soap">Cully's Natural Foaming Hand Soap</h3>
+                    <p class="product-description">
+                        Luxurious foaming hand soap made with natural ingredients. Gentle on skin, available in two delightful scents.
+                    </p>
+                    <div class="product-features">
+                        <span class="feature-tag">2 Scents</span>
+                        <span class="feature-tag">Moisturizing</span>
+                        <span class="feature-tag">Gallon Refill</span>
+                    </div>
+                    <div class="product-pricing">
+                        <div class="product-price soap">From $10.25</div>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span>4.55 (31)</span>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <a href="product-hand-soap.html" class="btn-view soap">View Details</a>
+                        <button class="btn-add soap">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="info-content">
+            <h2 class="info-title">Why Choose Cully's?</h2>
+            <p class="info-description">
+                Our probiotic-powered products don't just clean - they protect and maintain healthy environments for up to 96 hours after application.
+            </p>
+            
+            <div class="info-stats">
+                <div class="stat-item">
+                    <div class="stat-number">96</div>
+                    <div class="stat-label">Hours of Protection</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Non-Toxic Formula</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$99</div>
+                    <div class="stat-label">Free Shipping Over</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
