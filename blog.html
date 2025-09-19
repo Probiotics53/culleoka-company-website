@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Resources - Culleoka Company</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #2e7d32;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 120px 6% 80px;
+            background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(46, 125, 50, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-badge {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2e7d32;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 24px;
+            border: 1px solid rgba(46, 125, 50, 0.2);
+        }
+        
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: #1b5e20;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        
+        .hero-subtitle {
+            font-size: 22px;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+        
+        /* Categories Section */
+        .categories-section {
+            padding: 40px 6%;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .categories-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: white;
+            color: #666;
+            border: 2px solid #e0e0e0;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .category-btn.active,
+        .category-btn:hover {
+            background: #2e7d32;
+            color: white;
+            border-color: #2e7d32;
+        }
+        
+        /* Blog Section */
+        .blog-section {
+            padding: 80px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .featured-post {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 80px;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+        
+        .featured-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+        }
+        
+        .featured-image {
+            height: 400px;
+            background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #2e7d32;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(46, 125, 50, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .featured-text {
+            padding: 40px;
+        }
+        
+        .featured-badge {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        
+        .featured-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1b5e20;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        
+        .featured-excerpt {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .featured-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        .read-more-btn {
+            background: transparent;
+            color: #2e7d32;
+            border: 2px solid #2e7d32;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .read-more-btn:hover {
+            background: #2e7d32;
+            color: white;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .post-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+        
+        .post-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .post-image.cleaning {
+            background: linear-gradient(135deg, #f8fdf8 0%, #e8f5e8 100%);
+        }
+        
+        .post-image.tips {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+        }
+        
+        .post-image.science {
+            background: linear-gradient(135deg, #f0f4f9 0%, #e1e8f0 100%);
+        }
+        
+        .post-image.health {
+            background: linear-gradient(135deg, #f8f4ff 0%, #ede7f6 100%);
+        }
+        
+        .post-image.business {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+        }
+        
+        .post-image::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+        
+        .post-image.cleaning::before {
+            background: radial-gradient(circle, rgba(46, 125, 50, 0.1) 0%, transparent 70%);
+        }
+        
+        .post-image.tips::before {
+            background: radial-gradient(circle, rgba(255, 152, 0, 0.1) 0%, transparent 70%);
+        }
+        
+        .post-image.science::before {
+            background: radial-gradient(circle, rgba(30, 81, 123, 0.1) 0%, transparent 70%);
+        }
+        
+        .post-image.health::before {
+            background: radial-gradient(circle, rgba(156, 39, 176, 0.1) 0%, transparent 70%);
+        }
+        
+        .post-image.business::before {
+            background: radial-gradient(circle, rgba(56, 142, 60, 0.1) 0%, transparent 70%);
+        }
+        
+        .post-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            z-index: 2;
+        }
+        
+        .post-placeholder.cleaning {
+            color: #2e7d32;
+        }
+        
+        .post-placeholder.tips {
+            color: #e65100;
+        }
+        
+        .post-placeholder.science {
+            color: #1e517b;
+        }
+        
+        .post-placeholder.health {
+            color: #7b1fa2;
+        }
+        
+        .post-placeholder.business {
+            color: #388e3c;
+        }
+        
+        .post-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 3;
+        }
+        
+        .post-badge.cleaning {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+        }
+        
+        .post-badge.tips {
+            background: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+        }
+        
+        .post-badge.science {
+            background: linear-gradient(135deg, #1e517b 0%, #2196f3 100%);
+        }
+        
+        .post-badge.health {
+            background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
+        }
+        
+        .post-badge.business {
+            background: linear-gradient(135deg, #388e3c 0%, #66bb6a 100%);
+        }
+        
+        .post-content {
+            padding: 24px;
+        }
+        
+        .post-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1b5e20;
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        
+        .post-excerpt {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+        
+        .post-read-time {
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+        
+        .post-link {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .post-link:hover {
+            color: #1b5e20;
+        }
+        
+        /* Newsletter Section */
+        .newsletter-section {
+            padding: 80px 6%;
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .newsletter-description {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 14px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .newsletter-btn {
+            background: white;
+            color: #2e7d32;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+        }
+        
+        /* Affiliate and Employment Sections */
+        .affiliate-section,
+        .employment-section {
+            padding: 80px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 16px;
+        }
+        
+        .section-description {
+            font-size: 20px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .benefit-grid,
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .benefit-card,
+        .culture-item {
+            background: white;
+            padding: 30px 24px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover,
+        .culture-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .benefit-icon,
+        .culture-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .benefit-card h3,
+        .culture-item h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1b5e20;
+            margin-bottom: 12px;
+        }
+        
+        .benefit-card p,
+        .culture-item p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .affiliate-cta,
+        .employment-cta {
+            text-align: center;
+            background: #f8fdf8;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+        
+        .affiliate-cta h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1b5e20;
+            margin-bottom: 12px;
+        }
+        
+        .affiliate-cta p,
+        .employment-cta p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+        
+        .btn-primary-large {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary-large:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+        }
+        
+        .current-openings {
+            margin-top: 60px;
+        }
+        
+        .current-openings h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #1b5e20;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .job-listings {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .job-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-color: rgba(46, 125, 50, 0.3);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .job-header h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1b5e20;
+            margin: 0;
+        }
+        
+        .job-type {
+            background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .job-description {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .job-details {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 20px 60px;
+            }
+            
+            .hero-title {
+                font-size: 42px;
+            }
+            
+            .categories-section {
+                padding: 20px;
+            }
+            
+            .blog-section {
+                padding: 60px 20px;
+            }
+            
+            .featured-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-image {
+                height: 250px;
+            }
+            
+            .featured-text {
+                padding: 24px;
+            }
+            
+            .featured-title {
+                font-size: 24px;
+            }
+            
+            .posts-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .newsletter-section {
+                padding: 60px 20px;
+            }
+            
+            .newsletter-title {
+                font-size: 36px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="index.html" class="logo">Cully's</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="products.html" class="cta-button">Shop All</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">📚 Expert Knowledge</div>
+            <h1 class="hero-title">Clean Living Resources</h1>
+            <p class="hero-subtitle">
+                Discover cleaning tips, probiotic science insights, and healthy home guides from our team of natural cleaning experts.
+            </p>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="categories-container">
+            <button class="category-btn active" onclick="filterPosts('all')">Blogs</button>
+            <button class="category-btn" onclick="filterPosts('cleaning')">Home Cleaning</button>
+            <button class="category-btn" onclick="filterPosts('business')">Business & Schools</button>
+            <button class="category-btn" onclick="filterPosts('science')">Probiotic Science</button>
+            <button class="category-btn" onclick="filterPosts('health')">Healthy Spaces</button>
+            <button class="category-btn" onclick="filterPosts('tips')">How-To Guides</button>
+            <button class="category-btn" onclick="showSection('affiliate')">Affiliate Program</button>
+            <button class="category-btn" onclick="showSection('employment')">Employment Opportunities</button>
+            <button class="category-btn" onclick="showSection('newsletter')">Newsletter Sign-up</button>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <!-- Featured Post -->
+        <article class="featured-post">
+            <div class="featured-content">
+                <div class="featured-image">
+                    <span>Featured Article Image</span>
+                </div>
+                <div class="featured-text">
+                    <span class="featured-badge">Featured</span>
+                    <h2 class="featured-title">The Science Behind Probiotic Cleaning: How Beneficial Bacteria Transform Your Home</h2>
+                    <p class="featured-excerpt">
+                        Discover how revolutionary probiotic technology works to clean and protect your home for up to 96 hours. Learn why beneficial bacteria are the future of safe, effective cleaning.
+                    </p>
+                    <div class="featured-meta">
+                        <span>By Culleoka Team</span>
+                        <span>•</span>
+                        <span>December 15, 2024</span>
+                        <span>•</span>
+                        <span>8 min read</span>
+                    </div>
+                    <a href="#" class="read-more-btn">Read Full Article</a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Blog Posts Grid -->
+        <div class="posts-grid">
+            <!-- Business Posts -->
+            <article class="post-card" data-category="business">
+                <div class="post-image business">
+                    <div class="post-badge business">Business</div>
+                    <div class="post-placeholder business">Commercial Guide</div>
+                </div>
+                <div class="post-content">
+                    <h3 class="post-title">Why Schools Are Switching to Probiotic Cleaning Solutions</h3>
+                    <p class="post-excerpt">
+                        Discover how educational institutions are creating healthier learning environments while reducing chemical exposure for students and staff.
+                    </p>
+                    <div class="post-meta">
+                        <span>Dec 12, 2024</span>
+                        <span class="post-read-time">6 min read</span>
+                    </div>
+                    <a href="#" class="post-link">Read More →</a>
+                </div>
+            </article>
+
+            <article class="post-card" data-category="business">
+                <div class="post-image business">
+                    <div class="post-badge business">Business</div>
+                    <div class="post-placeholder business">Office Health</div>
+                </div>
+                <div class="post-content">
+                    <h3 class="post-title">Commercial Cleaning: ROI of Healthier Buildings</h3>
+                    <p class="post-excerpt">
+                        How investing in non-toxic, probiotic cleaning solutions improves employee health, reduces sick days, and boosts productivity.
+                    </p>
+                    <div class="post-meta">
+                        <span>Dec 1, 2024</span>
+                        <span class="post-read-time">8 min read</span>
+                    </div>
+                    <a href="#" class="post-link">Read More →</a>
+                </div>
+            </article>
+
+            <!-- Cleaning Tips Posts -->
+            <article class="post-card" data-category="cleaning">
+                <div class="post-image cleaning">
+                    <div class="post-badge cleaning">Tips</div>
+                    <div class="post-placeholder cleaning">Cleaning Guide</div>
+                </div>
+                <div class="post-content">
+                    <h3 class="post-title">10 Natural Cleaning Mistakes You're Probably Making</h3>
+                    <p class="post-excerpt">
+                        Avoid these common pitfalls when switching to natural cleaning products and get better results from your eco-friendly routine.
+                    </p>
+                    <div class="post-meta">
+                        <span>Dec 10, 2024</span>
+                        <span class="post-read-time">5 min read</span>
+                    </div>
+                    <a href="#" class="post-link">Read More →</a>
+                </div>
+            </article>
+
+            <article class="post-card" data-category="science">
+                <div class="post-image science">
+                    <div class="post-badge science">Science</div>
+                    <div class="post-placeholder science">Lab Research</div>
+                </div>
+                <div class="post-content">
+                    <h3 class="post-title">What Are Probiotics and How Do They Clean?</h3>
+                    <p class="post-excerpt">
+                        A deep dive into the microbiology behind probiotic cleaning and why beneficial bacteria are more effective than harsh chemicals.
+                    </p>
+                    <div class="post-meta">
+                        <span>Dec 8, 2024</span>
+                        <span class="post-read-time">7 min read</span>
+                    </div>
